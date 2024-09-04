@@ -1,4 +1,7 @@
-﻿namespace GatherUp.API.Configurations;
+﻿using GatherUp.Core.Jwt.Abstract;
+using GatherUp.Core.Jwt.Concrete;
+
+namespace GatherUp.API.Configurations;
 
 public static class JwtServiceCollectionExtension
 {
