@@ -1,9 +1,5 @@
 ﻿using GatherUp.Application.Services;
-using GatherUp.Core.Jwt.Abstract;
-using GatherUp.Domain.Entities;
 using GatherUp.Domain.Models.AuthModels;
-using GatherUp.Domain.Models.HelperModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GatherUp.API.Controllers;

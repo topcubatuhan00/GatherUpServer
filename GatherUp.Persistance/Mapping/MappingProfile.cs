@@ -16,6 +16,6 @@ public class MappingProfile : Profile
         CreateMap<UpdateEventModel, Event>().ReverseMap();
         CreateMap<CreateEventUserRelationModel, EventUserRelation>().ReverseMap();
         CreateMap<UpdateEventUserRelationModel, EventUserRelation>().ReverseMap();
-    
+
     }
 }

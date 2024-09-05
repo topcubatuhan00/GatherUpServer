@@ -1,5 +1,4 @@
 ﻿using GatherUp.Application.Services;
-using GatherUp.Domain.Models.EventModels;
 using GatherUp.Domain.Models.EventUserRelationModels;
 using GatherUp.Domain.Models.HelperModels;
 using Microsoft.AspNetCore.Mvc;

@@ -49,7 +49,7 @@ public class JwtService : IJwtService
                 signingCredentials: securityCreds
             );
         var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-        return new TokenResponseModel { Token=token, Expiration=jwtSecurityToken.ValidTo};
+        return new TokenResponseModel { Token = token, Expiration = jwtSecurityToken.ValidTo };
     }
     #endregion
 }
