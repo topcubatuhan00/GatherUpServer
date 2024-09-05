@@ -1,5 +1,7 @@
-﻿using GatherUp.Core.Jwt.Abstract;
+﻿using GatherUp.Application.Services;
+using GatherUp.Core.Jwt.Abstract;
 using GatherUp.Domain.Entities;
+using GatherUp.Domain.Models.AuthModels;
 using GatherUp.Domain.Models.HelperModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,42 +13,29 @@ namespace GatherUp.API.Controllers;
 public class AuthController : ControllerBase
 {
     #region Fields
-    private readonly IJwtService _jwtService;
+    private readonly IAuthService _authService;
     #endregion
 
     #region Ctor
-    public AuthController(IJwtService jwtService)
+    public AuthController(IAuthService authService)
     {
-        _jwtService = jwtService;
+        _authService = authService;
     }
     #endregion
 
     #region Methods
-    [HttpGet]
-    public TokenResponseModel Login(string userName, string role, string password)
+    [HttpPost("[action]")]
+    public async Task<IActionResult> Login(AuthLoginModel model)
     {
-        User user = new User
-        {
-            UserName = userName,
-            Role = role,
-            Password = password,
-            Name = "Batuhan",
-            LastName = "Topcu",
-            Email = "a@a.com",
-            CreatedDate = DateTime.Now,
-            CreatorName = "Batuhan",
-            DeletedTime = null,
-            DeleterName = null,
-            Id = 1,
-            IsActive = true,
-            IsConfirmed = true,
-            Picture = "",
-            UpdatedDate = null,
-            UpdaterName = null
-        };
+        var result = await _authService.Login(model);
+        return Ok(result);
+    }
 
-        var response = _jwtService.CreateToken(user);
-        return response;
+    [HttpPost("[action]")]
+    public async Task<IActionResult> Register(AuthRegisterModel user)
+    {
+        await _authService.Register(user);
+        return Ok();
     }
     #endregion
 }

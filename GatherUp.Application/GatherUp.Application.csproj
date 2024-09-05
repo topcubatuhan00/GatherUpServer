@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GatherUp.Domain\GatherUp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

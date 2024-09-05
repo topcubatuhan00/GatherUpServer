@@ -1,0 +1,13 @@
+﻿using GatherUp.Domain.Core;
+
+namespace GatherUp.Domain.Entities;
+
+public class Event : EntityBase
+{
+    public string Name { get; set; }
+    public string EventDate { get; set; }
+    public string EventTime { get; set; }
+    public string EventPlace { get; set; }
+    public string CommunityName { get; set; }
+    public int CommunityId { get; set; }
+}

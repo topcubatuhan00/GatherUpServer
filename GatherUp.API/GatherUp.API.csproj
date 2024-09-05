@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GatherUp.Application\GatherUp.Application.csproj" />
     <ProjectReference Include="..\GatherUp.Core\GatherUp.Core.csproj" />
+    <ProjectReference Include="..\GatherUp.Persistance\GatherUp.Persistance.csproj" />
   </ItemGroup>
 
 </Project>
