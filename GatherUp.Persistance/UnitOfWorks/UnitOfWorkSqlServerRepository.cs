@@ -2,11 +2,13 @@
 using GatherUp.Domain.Repositories.CommunityRepositories;
 using GatherUp.Domain.Repositories.EventRepositories;
 using GatherUp.Domain.Repositories.EventUserRelationRepositories;
+using GatherUp.Domain.Repositories.UserRepositories;
 using GatherUp.Domain.UnitOfWork;
 using GatherUp.Persistance.Repositories.AuthRepositories;
 using GatherUp.Persistance.Repositories.CommunityRepositories;
 using GatherUp.Persistance.Repositories.EventRepositories;
 using GatherUp.Persistance.Repositories.EventUserRelationRepositories;
+using GatherUp.Persistance.Repositories.UserRepositories;
 using Microsoft.Data.SqlClient;
 
 namespace GatherUp.Persistance.UnitOfWorks;
@@ -33,6 +35,11 @@ public class UnitOfWorkSqlServerRepository : IUnitOfWorkRepository
     public IEventUserRelationQueryRepository eventUserRelationQueryRepository { get; }
     #endregion
 
+    #region UserRepositories
+    public IUserQueryRepository userQueryRepository { get; }
+    public IUserCommandRepository userCommandRepository{ get; }
+    #endregion
+
     #region Ctor
     public UnitOfWorkSqlServerRepository
     (
@@ -48,6 +55,8 @@ public class UnitOfWorkSqlServerRepository : IUnitOfWorkRepository
         communityQueryRepository = new CommunityQueryRepository(context, transaction);
         eventUserRelationCommandRepository = new EventUserRelationCommandRepository(context, transaction);
         eventUserRelationQueryRepository = new EventUserRelationQueryRepository(context, transaction);
+        userQueryRepository = new UserQueryRepository(context, transaction);
+        userCommandRepository = new UserCommandRepository(context, transaction);
     }
     #endregion
 }

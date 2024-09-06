@@ -15,6 +15,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<ICommunityService, CommunityService>();
         services.AddScoped<IEventService, EventService>();
         services.AddScoped<IEventUserRelationService, EventUserRelationService>();
+        services.AddScoped<IUserService, UserService>();
         #endregion
 
         #region Utilities

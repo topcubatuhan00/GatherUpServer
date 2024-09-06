@@ -48,7 +48,7 @@ public class EventCommandRepository : Repository, IEventCommandRepository
 
     public async Task UpdateAsync(Event entity)
     {
-        var query = "update [Event] set Name=@name, EventDate=@edate, EventTime=@etime, EventPlave=@eplace, CommunityName=@cname, CommunityId=@cid, UpdatedDate=@udate, UpdaterName=@uname, IsActive=@active where Id=@id";
+        var query = "update [Event] set Name=@name, EventDate=@edate, EventTime=@etime, EventPlace=@eplace, CommunityName=@cname, CommunityId=@cid, UpdatedDate=@udate, UpdaterName=@uname, IsActive=@active where Id=@id";
         var command = CreateCommand(query);
         command.Parameters.AddWithValue("@name", entity.Name);
         command.Parameters.AddWithValue("@edate", entity.EventDate);
@@ -57,7 +57,7 @@ public class EventCommandRepository : Repository, IEventCommandRepository
         command.Parameters.AddWithValue("@cname", entity.CommunityName);
         command.Parameters.AddWithValue("@cid", entity.CommunityId);
 
-        command.Parameters.AddWithValue("@udate", entity.UpdatedDate);
+        command.Parameters.AddWithValue("@udate", DateTime.Now);
         command.Parameters.AddWithValue("@uname", entity.UpdaterName);
         command.Parameters.AddWithValue("@active", entity.IsActive);
         command.Parameters.AddWithValue("@id", entity.Id);

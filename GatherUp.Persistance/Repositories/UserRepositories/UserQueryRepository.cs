@@ -1,40 +1,43 @@
 ﻿using GatherUp.Domain.Entities;
 using GatherUp.Domain.Helpers;
 using GatherUp.Domain.Models.HelperModels;
-using GatherUp.Domain.Repositories.EventRepositories;
+using GatherUp.Domain.Repositories.UserRepositories;
 using Microsoft.Data.SqlClient;
 
-namespace GatherUp.Persistance.Repositories.EventRepositories;
+namespace GatherUp.Persistance.Repositories.UserRepositories;
 
-public class EventQueryRepository : Repository, IEventQueryRepository
+public class UserQueryRepository : Repository, IUserQueryRepository
 {
     #region Ctor
-    public EventQueryRepository(SqlConnection context, SqlTransaction transaction)
+    public UserQueryRepository(SqlConnection context, SqlTransaction transaction)
     {
         this._context = context;
         this._transaction = transaction;
     }
-
-    public PaginationHelper<Event> GetAll(PaginationRequest request)
+    #endregion
+    public PaginationHelper<User> GetAll(PaginationRequest request)
     {
-        var command = CreateCommand("SELECT COUNT(*) FROM [Event]");
+        var command = CreateCommand("SELECT COUNT(*) FROM [User]");
         int totalCount = (int)command.ExecuteScalar();
 
-        command.CommandText = $"SELECT * FROM [Event] WHERE IsActive=1 ORDER BY Id OFFSET {((request.PageNumber - 1) * request.PageSize)} ROWS FETCH NEXT {request.PageSize} ROWS ONLY";
+        command.CommandText = $"SELECT * FROM [User] WHERE IsActive=1 ORDER BY Id OFFSET {((request.PageNumber - 1) * request.PageSize)} ROWS FETCH NEXT {request.PageSize} ROWS ONLY";
         using (var reader = command.ExecuteReader())
         {
-            List<Event> models = new List<Event>();
+            List<User> models = new List<User>();
             while (reader.Read())
             {
-                models.Add(new Event
+                models.Add(new User
                 {
                     Id = Convert.ToInt32(reader["Id"]),
-                    CommunityId = Convert.ToInt32(reader["CommunityId"]),
                     Name = reader["Name"].ToString(),
-                    CommunityName = reader["CommunityName"].ToString(),
-                    EventDate = reader["EventDate"].ToString(),
-                    EventPlace = reader["EventPlace"].ToString(),
-                    EventTime = reader["EventTime"].ToString(),
+                    LastName = reader["LastName"].ToString(),
+                    Email = reader["Email"].ToString(),
+                    Password = reader["Password"].ToString(),
+                    Picture = reader["Picture"].ToString(),
+                    Role = reader["Role"].ToString(),
+                    UserName = reader["UserName"].ToString(),
+                    IsConfirmed = Convert.ToBoolean(reader["IsConfirmed"]),
+
                     CreatorName = reader["CreatorName"].ToString(),
                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
                     IsActive = Convert.ToBoolean(reader["IsActive"]),
@@ -42,28 +45,31 @@ public class EventQueryRepository : Repository, IEventQueryRepository
                     UpdatedDate = reader["UpdatedDate"] != DBNull.Value ? Convert.ToDateTime(reader["UpdatedDate"]) : (DateTime?)null,
                 });
             }
-            return new PaginationHelper<Event>(totalCount, request.PageSize, request.PageNumber, models);
+            return new PaginationHelper<User>(totalCount, request.PageSize, request.PageNumber, models);
         }
     }
 
-    public async Task<Event> GetById(int id)
+    public async Task<User> GetById(int id)
     {
-        var command = CreateCommand("SELECT * FROM [Event] WHERE Id = @id");
+        var command = CreateCommand("SELECT * FROM [User] WHERE Id = @id");
         command.Parameters.AddWithValue("@id", id);
 
         using (var reader = command.ExecuteReader())
         {
             if (reader.HasRows && reader.Read())
             {
-                return new Event
+                return new User
                 {
                     Id = Convert.ToInt32(reader["Id"]),
-                    CommunityId = Convert.ToInt32(reader["CommunityId"]),
                     Name = reader["Name"].ToString(),
-                    CommunityName = reader["CommunityName"].ToString(),
-                    EventDate = reader["EventDate"].ToString(),
-                    EventPlace = reader["EventPlace"].ToString(),
-                    EventTime = reader["EventTime"].ToString(),
+                    LastName = reader["LastName"].ToString(),
+                    Email = reader["Email"].ToString(),
+                    Password = reader["Password"].ToString(),
+                    Picture = reader["Picture"].ToString(),
+                    Role = reader["Role"].ToString(),
+                    UserName = reader["UserName"].ToString(),
+                    IsConfirmed = Convert.ToBoolean(reader["IsConfirmed"]),
+
                     CreatorName = reader["CreatorName"].ToString(),
                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
                     IsActive = Convert.ToBoolean(reader["IsActive"]),
@@ -75,5 +81,4 @@ public class EventQueryRepository : Repository, IEventQueryRepository
                 return null;
         }
     }
-    #endregion
 }

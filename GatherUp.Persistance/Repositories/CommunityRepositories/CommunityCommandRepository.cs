@@ -48,7 +48,7 @@ public class CommunityCommandRepository : Repository, ICommunityCommandRepositor
         var command = CreateCommand(query);
         command.Parameters.AddWithValue("@name", entity.Name);
         command.Parameters.AddWithValue("@desc", entity.Description);
-        command.Parameters.AddWithValue("@udate", entity.UpdatedDate);
+        command.Parameters.AddWithValue("@udate", DateTime.Now);
         command.Parameters.AddWithValue("@uname", entity.UpdaterName);
         command.Parameters.AddWithValue("@active", entity.IsActive);
         command.Parameters.AddWithValue("@id", entity.Id);

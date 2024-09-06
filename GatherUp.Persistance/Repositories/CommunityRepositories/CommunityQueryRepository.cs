@@ -20,7 +20,7 @@ public class CommunityQueryRepository : Repository, ICommunityQueryRepository
         var command = CreateCommand("SELECT COUNT(*) FROM [Community]");
         int totalCount = (int)command.ExecuteScalar();
 
-        command.CommandText = $"SELECT * FROM [Community] ORDER BY Id OFFSET {((request.PageNumber - 1) * request.PageSize)} ROWS FETCH NEXT {request.PageSize} ROWS ONLY";
+        command.CommandText = $"SELECT * FROM [Community] WHERE IsActive=1 ORDER BY Id OFFSET {((request.PageNumber - 1) * request.PageSize)} ROWS FETCH NEXT {request.PageSize} ROWS ONLY";
         using (var reader = command.ExecuteReader())
         {
             List<Community> models = new List<Community>();
@@ -34,6 +34,8 @@ public class CommunityQueryRepository : Repository, ICommunityQueryRepository
                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
                     IsActive = Convert.ToBoolean(reader["IsActive"]),
                     Description = reader["Description"].ToString(),
+                    UpdaterName = reader["UpdaterName"] != DBNull.Value ? reader["UpdaterName"].ToString() : null,
+                    UpdatedDate = reader["UpdatedDate"] != DBNull.Value ? Convert.ToDateTime(reader["UpdatedDate"]) : (DateTime?)null,
                 });
             }
             return new PaginationHelper<Community>(totalCount, request.PageSize, request.PageNumber, models);
@@ -57,6 +59,8 @@ public class CommunityQueryRepository : Repository, ICommunityQueryRepository
                     CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
                     IsActive = Convert.ToBoolean(reader["IsActive"]),
                     Description = reader["Description"].ToString(),
+                    UpdaterName = reader["UpdaterName"] != DBNull.Value ? reader["UpdaterName"].ToString() : null,
+                    UpdatedDate = reader["UpdatedDate"] != DBNull.Value ? Convert.ToDateTime(reader["UpdatedDate"]) : (DateTime?)null,
                 };
             }
             else

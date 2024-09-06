@@ -2,6 +2,7 @@
 using GatherUp.Domain.Repositories.CommunityRepositories;
 using GatherUp.Domain.Repositories.EventRepositories;
 using GatherUp.Domain.Repositories.EventUserRelationRepositories;
+using GatherUp.Domain.Repositories.UserRepositories;
 
 namespace GatherUp.Domain.UnitOfWork;
 
@@ -25,5 +26,10 @@ public interface IUnitOfWorkRepository
     #region EventUserRelationRepositories
     IEventUserRelationCommandRepository eventUserRelationCommandRepository { get; }
     IEventUserRelationQueryRepository eventUserRelationQueryRepository { get; }
+    #endregion
+
+    #region UserRepositories
+    IUserCommandRepository userCommandRepository{ get; }
+    IUserQueryRepository userQueryRepository{ get; }
     #endregion
 }
